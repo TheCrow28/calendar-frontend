@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Utenti</h2>
+<mat-dialog-content class="mat-typography">
+  <ul *ngFor="let user of data">
+    <li>• {{user.name}}</li>
+    <li>• {{user.email}}</li>
+    <li>• {{user.phone}}</li>
+    <hr>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close="">Chiudi</button>
+</mat-dialog-actions>

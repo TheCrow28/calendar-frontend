@@ -1,0 +1,112 @@
+<img src="assets/img/logo2.png" style="height: 60px; float:right; margin-top: 10px" alt="">
+<img src="assets/img/logo1.png" style="height: 60px; float:right; margin-right: 50px; margin-top: 10px" alt="">
+<section class="hero">
+  <div class="hero-body">
+    <p class="title">Welcome to JBoss</p>
+    <p class="subtitle" style="padding-top: 20px">You have succesfully deployed a Java EE 6 Enterprise
+      Application.</p>
+    <p class="subtitle"><b>Your application can run on:</b></p>
+    <img src="assets/img/img1.png" alt="">
+  </div>
+</section>
+<section style="float: right;position: relative;bottom: 230px;margin-right: 20px;">
+  <div class="box has-background-grey-lighter" style="max-width: 400px">
+    <p style="margin-bottom: 15px">Learn more about JBoss Enterprise Application Platform 6.</p>
+    <ul>
+      <li style="font-size: small"><a href="https://access.redhat.com/docs/JBoss_Enterprise_Application_Platform/">•
+        Documentation</a></li>
+      <li style="font-size: small"><a href="https://www.redhat.com/en">• Product Information</a></li>
+    </ul>
+    <br>
+    <p style="margin-bottom: 15px">Learn more about JBoss AS 7.</p>
+    <ul>
+      <li style="font-size: small">
+        <a href="https://developers.redhat.com/?referrer=jbd">• Getting Started Developing Applications Guide
+        </a>
+      </li>
+      <li style="font-size: small">
+        <a href="https://jbossas.jboss.org/">• Community Project Information
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>
+<form
+  style="border-style: groove; width: 500px; margin-left: 50px; position: relative; bottom: 50px"
+  (ngSubmit)="inserisciUtente()"
+  #userForm="ngForm">
+
+  <p class="title" style="font-size: 10px; margin-left: 20px; margin-top: 10px">Member Registration</p>
+  <p class="subtitle" style="font-size: 10px; margin-left: 20px;">Enforces annotation-based constraints defined on
+    the model class.</p>
+
+  <div class="field" style=" margin-left: 20px; display: flex">
+    <label class="label" style="font-size: 15px;">Name:</label>
+    <input
+      type="text"
+      name="Name"
+      class="input"
+      style="left: 17px; width: 250px"
+      [(ngModel)]="name"
+      required>
+  </div>
+
+  <div class="field" style=" margin-left: 20px; display: flex">
+    <label class="label" style="font-size: 15px">Email:</label>
+    <input
+      type="text"
+      name="Email"
+      class="input"
+      style="left: 20px; width: 250px;"
+      [(ngModel)]="email"
+      required
+      email>
+  </div>
+
+  <div class="field" style=" margin-left: 20px; display: flex">
+    <label class="label" style="font-size: 15px">Phone:</label>
+    <input
+      type="text"
+      name="Phone"
+      class="input"
+      style="left: 15px; width: 250px"
+      [(ngModel)]="phone"
+      required>
+  </div>
+
+  <button
+    type="submit"
+    class="button is-warning"
+    style="margin-left: 83px; margin-bottom: 10px"
+    [disabled]="userForm.invalid">
+    Register
+  </button>
+</form>
+
+<p class="title" style="font-size: 20px; margin-left: 50px; position: relative; bottom: 30px">Members</p>
+
+<table class="table is-narrow is-bordered" style="margin-left: 50px; position: relative; bottom: 30px">
+  <thead>
+  <tr style="background-color: black">
+    <th style="color: white">ID</th>
+    <th style="color: white">Name</th>
+    <th style="color: white">Email</th>
+    <th style="color: white">Phone</th>
+    <th style="color: white">REST URL</th>
+    <th style="color: white">Calendar</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let utente of listaUtenti">
+    <td><b>{{utente.id}}</b></td>
+    <td>{{utente.name}}</td>
+    <td>{{utente.email}}</td>
+    <td>{{utente.phone}}</td>
+    <td><a (click)="openDialogSingolo(utente.id)">{{utente.url}}</a></td>
+    <td><a routerLink="/calendar">Calendar</a></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>REST URL for all members: <a (click)="openDialogTutti()">/rest/members</a></tr>
+  </tfoot>
+</table>
