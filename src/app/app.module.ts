@@ -1,19 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HomeComponent} from './home/home.component';
 import {FormsModule} from "@angular/forms";
 import {MatDialogModule} from '@angular/material/dialog';
-import { DialogUtenteComponent } from './home/dialog/dialog-utente/dialog-utente.component';
-import { DialogListaUtentiComponent } from './home/dialog/dialog-lista-utenti/dialog-lista-utenti.component';
+import {DialogUtenteComponent} from './home/dialog/dialog-utente/dialog-utente.component';
+import {DialogListaUtentiComponent} from './home/dialog/dialog-lista-utenti/dialog-lista-utenti.component';
+import {CalendarComponent} from './calendar/calendar.component';
+import {CommonModule} from "@angular/common";
+
+import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FlatpickrModule } from 'angularx-flatpickr';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    CalendarComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,8 +32,18 @@ import { DialogListaUtentiComponent } from './home/dialog/dialog-lista-utenti/di
     DialogUtenteComponent,
     DialogListaUtentiComponent,
 
+    CommonModule,
+    NgbModalModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    NgbModule,
   ],
+  exports: [CalendarComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

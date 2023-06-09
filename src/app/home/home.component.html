@@ -85,20 +85,20 @@
 
 <p class="title" style="font-size: 20px; margin-left: 50px; position: relative; bottom: 30px">Members</p>
 
-<table class="table is-narrow is-bordered" style="margin-left: 50px; position: relative; bottom: 30px">
+<table class="table" style="margin-left: 50px; width: 60%; position: relative; bottom: 30px">
   <thead>
-  <tr style="background-color: black">
-    <th style="color: white">ID</th>
-    <th style="color: white">Name</th>
-    <th style="color: white">Email</th>
-    <th style="color: white">Phone</th>
-    <th style="color: white">REST URL</th>
-    <th style="color: white">Calendar</th>
+  <tr class="table-dark">
+    <th scope="col" style="color: white">ID</th>
+    <th scope="col" style="color: white">Name</th>
+    <th scope="col" style="color: white">Email</th>
+    <th scope="col" style="color: white">Phone</th>
+    <th scope="col" style="color: white">REST URL</th>
+    <th scope="col" style="color: white">Calendar</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let utente of listaUtenti">
-    <td><b>{{utente.id}}</b></td>
+    <th scope="row"><b>{{utente.id}}</b></th>
     <td>{{utente.name}}</td>
     <td>{{utente.email}}</td>
     <td>{{utente.phone}}</td>
@@ -106,7 +106,8 @@
     <td><a routerLink="/calendar">Calendar</a></td>
   </tr>
   </tbody>
-  <tfoot>
+  <tfoot style="margin-left: 50px">
   <tr>REST URL for all members: <a (click)="openDialogTutti()">/rest/members</a></tr>
   </tfoot>
 </table>
+
