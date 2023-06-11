@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {ChangeDetectionStrategy} from '@angular/core';
-import {startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMonth, addHours,} from 'date-fns';
+import {startOfDay, isSameDay, isSameMonth,} from 'date-fns';
 import {Subject} from 'rxjs';
 import {CalendarEvent, CalendarView,} from 'angular-calendar';
+import {UtentiService} from "../../services/utenti.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-calendar',
@@ -14,6 +16,9 @@ import {CalendarEvent, CalendarView,} from 'angular-calendar';
 
 export class CalendarComponent {
 
+  constructor(private utentiService: UtentiService, private route: ActivatedRoute) {
+  }
+
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -22,29 +27,9 @@ export class CalendarComponent {
 
   refresh = new Subject<void>();
 
-  events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-    },
-    {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-    },
-    {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'An event',
-    },
-  ];
+  events = this.utentiService.listaUtenti[parseInt(this.route.snapshot.paramMap.get('id')!)].eventi
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
   dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -60,7 +45,6 @@ export class CalendarComponent {
       {
         title: 'New event',
         start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
       },
     ];
   }

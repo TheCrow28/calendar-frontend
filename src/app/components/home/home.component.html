@@ -1,12 +1,12 @@
-<img src="assets/img/logo2.png" style="height: 60px; float:right; margin-top: 10px" alt="">
-<img src="assets/img/logo1.png" style="height: 60px; float:right; margin-right: 50px; margin-top: 10px" alt="">
+<img src="../../../assets/img/logo2.png" style="height: 60px; float:right; margin-top: 10px" alt="">
+<img src="../../../assets/img/logo1.png" style="height: 60px; float:right; margin-right: 50px; margin-top: 10px" alt="">
 <section class="hero">
   <div class="hero-body">
     <p class="title">Welcome to JBoss</p>
     <p class="subtitle" style="padding-top: 20px">You have succesfully deployed a Java EE 6 Enterprise
       Application.</p>
     <p class="subtitle"><b>Your application can run on:</b></p>
-    <img src="assets/img/img1.png" alt="">
+    <img src="../../../assets/img/img1.png" alt="">
   </div>
 </section>
 <section style="float: right;position: relative;bottom: 230px;margin-right: 20px;">
@@ -97,13 +97,13 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let utente of listaUtenti">
+  <tr *ngFor="let utente of listaUtenti, index as id">
     <th scope="row"><b>{{utente.id}}</b></th>
     <td>{{utente.name}}</td>
     <td>{{utente.email}}</td>
     <td>{{utente.phone}}</td>
     <td><a (click)="openDialogSingolo(utente.id)">{{utente.url}}</a></td>
-    <td><a routerLink="/calendar">Calendar</a></td>
+    <td><a routerLink="/calendar/{{id}}">Calendar</a></td>
   </tr>
   </tbody>
   <tfoot style="margin-left: 50px">
