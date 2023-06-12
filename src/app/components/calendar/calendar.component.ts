@@ -1,10 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ChangeDetectionStrategy} from '@angular/core';
 import {startOfDay, isSameDay, isSameMonth,} from 'date-fns';
 import {Subject} from 'rxjs';
 import {CalendarEvent, CalendarView,} from 'angular-calendar';
-import {UtentiService} from "../../services/utenti.service";
 import {ActivatedRoute} from "@angular/router";
+import { SpringbootService } from 'src/app/services/springboot.service';
 
 @Component({
   selector: 'app-calendar',
@@ -14,9 +14,31 @@ import {ActivatedRoute} from "@angular/router";
 
 })
 
-export class CalendarComponent {
+export class CalendarComponent implements OnInit{
 
-  constructor(private utentiService: UtentiService, private route: ActivatedRoute) {
+  listaEventi: any;
+  events = new Array
+
+  constructor(private route: ActivatedRoute, private http: SpringbootService) {
+  }
+
+  ngOnInit(): void {
+    this.http.getEventi(this.route.snapshot.paramMap.get('email')!)
+    .subscribe(data => {
+      this.listaEventi = data
+
+       for (let i = 0; i < this.listaEventi.length; i++) {
+
+         const newEvent = {
+          start: new Date(this.listaEventi[i].start.dateTime),
+          end: new Date(this.listaEventi[i].end.dateTime),
+          title: this.listaEventi[i].subject,
+
+         }
+
+         this.events.push(newEvent)
+       }
+    })
   }
 
   view: CalendarView = CalendarView.Month;
@@ -26,8 +48,6 @@ export class CalendarComponent {
   viewDate: Date = new Date();
 
   refresh = new Subject<void>();
-
-  events = this.utentiService.listaUtenti[parseInt(this.route.snapshot.paramMap.get('id')!)].eventi
 
   activeDayIsOpen: boolean = false;
 

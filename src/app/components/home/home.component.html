@@ -70,7 +70,7 @@
       name="Phone"
       class="input"
       style="left: 15px; width: 250px"
-      [(ngModel)]="phone"
+      [(ngModel)]="phoneNumber"
       required>
   </div>
 
@@ -97,13 +97,13 @@
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let utente of listaUtenti, index as id">
+  <tr *ngFor="let utente of this.listaUtenti">
     <th scope="row"><b>{{utente.id}}</b></th>
     <td>{{utente.name}}</td>
     <td>{{utente.email}}</td>
-    <td>{{utente.phone}}</td>
-    <td><a (click)="openDialogSingolo(utente.id)">{{utente.url}}</a></td>
-    <td><a routerLink="/calendar/{{id}}">Calendar</a></td>
+    <td>{{utente.phoneNumber}}</td>
+    <td><a (click)="openDialogSingolo(utente.email)">/rest/members/{{utente.id}}</a></td>
+    <td><a routerLink="/calendar/{{utente.email}}">Calendar</a></td>
   </tr>
   </tbody>
   <tfoot style="margin-left: 50px">

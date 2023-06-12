@@ -93,7 +93,7 @@
 
   <h3>
     <b style="margin-left: 8px">Edit events</b>
-    <button class="btn btn-primary float-end" (click)="addEvent()">
+    <button class="btn btn-primary float-end" (click)="addEvent()" style="margin-top: 5px;">
       Add new
     </button>
     <div class="clearfix"></div>
@@ -117,7 +117,7 @@
             type="text"
             class="form-control"
             [(ngModel)]="event.title"
-            (keyup)="refresh.next(undefined)"
+            (keyup)="refresh.next()"
           />
         </td>
         <td>
@@ -126,7 +126,7 @@
             type="text"
             mwlFlatpickr
             [(ngModel)]="event.start"
-            (ngModelChange)="refresh.next(undefined)"
+            (ngModelChange)="refresh.next()"
             [altInput]="true"
             [convertModelValue]="true"
             [enableTime]="true"
@@ -141,7 +141,7 @@
             type="text"
             mwlFlatpickr
             [(ngModel)]="event.end"
-            (ngModelChange)="refresh.next(undefined)"
+            (ngModelChange)="refresh.next()"
             [altInput]="true"
             [convertModelValue]="true"
             [enableTime]="true"
