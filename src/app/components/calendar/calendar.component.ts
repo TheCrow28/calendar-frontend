@@ -1,44 +1,46 @@
-import {Component, OnInit} from '@angular/core';
-import {ChangeDetectionStrategy} from '@angular/core';
-import {startOfDay, isSameDay, isSameMonth,} from 'date-fns';
-import {Subject} from 'rxjs';
-import {CalendarEvent, CalendarView,} from 'angular-calendar';
-import {ActivatedRoute} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { startOfDay, isSameDay, isSameMonth, } from 'date-fns';
+import { Subject } from 'rxjs';
+import { CalendarEvent, CalendarEventAction, CalendarView, } from 'angular-calendar';
+import { ActivatedRoute } from "@angular/router";
 import { SpringbootService } from 'src/app/services/springboot.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogEventComponent } from './dialog/dialog-event/dialog-event.component';
 
 @Component({
   selector: 'app-calendar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: [],
   templateUrl: './calendar.component.html',
 
 })
 
-export class CalendarComponent implements OnInit{
+export class CalendarComponent implements OnInit {
 
-  listaEventi: any;
-  events = new Array
+  incompleteEvents: any;
+  events: CalendarEvent[] = new Array
 
-  constructor(private route: ActivatedRoute, private http: SpringbootService) {
+  constructor(private route: ActivatedRoute, private http: SpringbootService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     this.http.getEventi(this.route.snapshot.paramMap.get('email')!)
-    .subscribe(data => {
-      this.listaEventi = data
+      .subscribe(data => {
+        this.incompleteEvents = data
 
-       for (let i = 0; i < this.listaEventi.length; i++) {
+        for (let i = 0; i < this.incompleteEvents.length; i++) {
 
-         const newEvent = {
-          start: new Date(this.listaEventi[i].start.dateTime),
-          end: new Date(this.listaEventi[i].end.dateTime),
-          title: this.listaEventi[i].subject,
+          const newEvent = {
+            start: new Date(this.incompleteEvents[i].start.dateTime),
+            end: new Date(this.incompleteEvents[i].end.dateTime),
+            title: this.incompleteEvents[i].subject,
+          }
 
-         }
+          this.events.push(newEvent)
+        }
 
-         this.events.push(newEvent)
-       }
-    })
+        console.log(this.events)
+
+      })
   }
 
   view: CalendarView = CalendarView.Month;
@@ -51,10 +53,16 @@ export class CalendarComponent implements OnInit{
 
   activeDayIsOpen: boolean = false;
 
-  dayClicked({date, events}: { date: Date; events: CalendarEvent[] }): void {
+  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
-      this.activeDayIsOpen = !((isSameDay(this.viewDate, date) && this.activeDayIsOpen) ||
-        events.length === 0);
+      if (
+        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
+        events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
       this.viewDate = date;
     }
   }
@@ -80,5 +88,17 @@ export class CalendarComponent implements OnInit{
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
   }
+
+  dialogEvent(event: CalendarEvent) {
+
+    this.dialog.open(DialogEventComponent, {
+      data: {
+        start: event.start,
+        end: event.end,
+        title: event.title
+      }
+    });
+  }
+
 }
 

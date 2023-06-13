@@ -16,6 +16,7 @@ import { NgbModalModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { DialogEventComponent } from './components/calendar/dialog/dialog-event/dialog-event.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
       useFactory: adapterFactory,
     }),
     NgbModule,
+    DialogEventComponent,
+
   ],
   exports: [CalendarComponent],
   providers: [],
